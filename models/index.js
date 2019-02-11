@@ -1,8 +1,23 @@
 const Sequelize = require('sequelize');
 
-const db = new Sequelize('postgres://localhost:5432/wikistack', {
+//For cloud9 db
+const db = new Sequelize('ubuntu', 'postgres', 'password', {
+  host: 'localhost',
+  dialect: 'postgres',
   logging: false,
 });
+
+//For my local db
+// const db = new Sequelize('postgres://localhost:5432/wikistack', {
+//   logging: false,
+// });
+
+
+const generateSlug = (title) => {
+  // And make whitespace underscore
+  // Removes all non-alphanumeric characters from title
+  return title.replace(/\s+/g, '_').replace(/\W/g, '');
+}
 
 const Page = db.define('page', {
   title: {
@@ -19,9 +34,15 @@ const Page = db.define('page', {
   },
   status: {
     type: Sequelize.ENUM('open', 'closed'),
-  },
-});
-
+  }
+}, {
+    hooks: {
+      beforeValidate: (page, options) => {
+        page.slug = generateSlug(page.title);
+      }
+    }
+    });
+    
 const User = db.define('user', {
   name: {
     type: Sequelize.STRING,
@@ -30,8 +51,10 @@ const User = db.define('user', {
   email: {
     type: Sequelize.STRING,
     allowNull: false,
-    validate: {isEmail: true}
+    validate: { isEmail: true }
   },
 });
+
+
 
 module.exports = { db, Page, User };
