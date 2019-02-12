@@ -1,16 +1,16 @@
 const Sequelize = require('sequelize');
 
 //For cloud9 db
-const db = new Sequelize('ubuntu', 'postgres', 'password', {
-  host: 'localhost',
-  dialect: 'postgres',
-  logging: false,
-});
-
-//For my local db
-// const db = new Sequelize('postgres://localhost:5432/wikistack', {
+// const db = new Sequelize('ubuntu', 'postgres', 'password', {
+//   host: 'localhost',
+//   dialect: 'postgres',
 //   logging: false,
 // });
+
+//For my local db
+const db = new Sequelize('postgres://localhost:5432/wikistack', {
+  logging: false,
+});
 
 
 const generateSlug = (title) => {
@@ -18,6 +18,7 @@ const generateSlug = (title) => {
   // Removes all non-alphanumeric characters from title
   return title.replace(/\s+/g, '_').replace(/\W/g, '');
 }
+
 
 const Page = db.define('page', {
   title: {
@@ -42,7 +43,7 @@ const Page = db.define('page', {
       }
     }
     });
-    
+
 const User = db.define('user', {
   name: {
     type: Sequelize.STRING,
@@ -55,6 +56,11 @@ const User = db.define('user', {
   },
 });
 
+const findPage = (slug) => {
+  return Page.findOne({
+    where: {slug: slug}
+  })
+}
 
 
-module.exports = { db, Page, User };
+module.exports = { db, Page, User, findPage };
