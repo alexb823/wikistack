@@ -1,16 +1,16 @@
 const Sequelize = require('sequelize');
 
 //For cloud9 db
-const db = new Sequelize('ubuntu', 'postgres', 'password', {
-  host: 'localhost',
-  dialect: 'postgres',
-  logging: false,
-});
-
-//For my local db
-// const db = new Sequelize('postgres://localhost:5432/wikistack', {
+// const db = new Sequelize('ubuntu', 'postgres', 'password', {
+//   host: 'localhost',
+//   dialect: 'postgres',
 //   logging: false,
 // });
+
+//For my local db
+const db = new Sequelize('postgres://localhost:5432/wikistack', {
+  logging: false,
+});
 
 
 const generateSlug = (title) => {
