@@ -40,13 +40,13 @@ module.exports = () =>
       </div>
 
       <div class="form-group">
-        <label for="pageContent" class="col-sm-2 control-label"
+        <label for="content" class="col-sm-2 control-label"
           >Page Content</label
         >
         <div class="col-sm-10">
           <textarea
             id="pageContent"
-            name="pageContent"
+            name="content"
             class="form-control"
             rows="10"
           ></textarea>
@@ -59,7 +59,7 @@ module.exports = () =>
             <label>
               <input
                 type="radio"
-                name="pageStatus"
+                name="status"
                 id="pageOpen"
                 value="open"
                 checked
@@ -71,7 +71,7 @@ module.exports = () =>
             <label>
               <input
                 type="radio"
-                name="pageStatus"
+                name="status"
                 id="pageClosed"
                 value="closed"
               />

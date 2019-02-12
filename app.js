@@ -26,8 +26,8 @@ const initDb = (force = false) => {
   db.authenticate()
     .then(() => console.log('Connected to the database'))
     .then(() => db.sync({force}))
-    .then(() => app.listen(port, () => console.log(`Listening on port ${port}`))) //For local matchine server
-    // .then(() => app.listen(process.env.PORT, process.env.IP, () => console.log('Server has started'))) //For when using cloud 9 server
+    // .then(() => app.listen(port, () => console.log(`Listening on port ${port}`))) //For local matchine server
+    .then(() => app.listen(process.env.PORT, process.env.IP, () => console.log('Server has started'))) //For when using cloud 9 server
     .catch(error => console.error(error));
 };
 
