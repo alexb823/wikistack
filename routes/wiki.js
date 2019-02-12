@@ -51,4 +51,11 @@ router.get('/:slug', (req, res, next) => {
     .catch(next)
 })
 
+router.get('/:slug/delete', (req, res, next) =>{
+  findPage((req.params.slug))
+  .then(page => page.destroy())
+  .then(() => res.redirect('/wiki'))
+  .catch(next)
+})
+
 module.exports = router;
