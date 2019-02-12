@@ -3,12 +3,12 @@ const addPage = require('../views/addPage')
 const layout = require('../views/layout')
 const main = require("../views/main")
 const wikipage = require('../views/wikipage')
-const { Page, findPage, getAllPages, findOrCreatUse } = require("../models/index")
+const { Page, findPage, findOrCreatUse } = require("../models/index")
 
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-  getAllPages()
+  Page.findAll()
     .then((pages) => res.send(main(pages)))
     .catch(next);
 });

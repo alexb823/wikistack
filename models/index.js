@@ -68,10 +68,6 @@ const findPage = (slug) => {
   })
 }
 
-const getAllPages = () => {
-  return Page.findAll();
-}
-
 const findOrCreatUse = (name, email) => {
   return User.findOrCreate({ where: { name: name, email: email } })
   .then(instance => instance[0]);
@@ -83,6 +79,5 @@ module.exports = {
   Page,
   User,
   findPage,
-  getAllPages,
-  findOrCreatUse
+  findOrCreatUse,
 };

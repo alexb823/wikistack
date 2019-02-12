@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const layout = require('./views/layout');
 const { db } = require('./models');
 const wikiRouter = require('./routes/wiki');
-const userRouter = require('./routes/user')
+const userRouter = require('./routes/users')
 
 const app = express();
 
@@ -14,13 +14,13 @@ app.use(express.urlencoded());
 app.use(express.static(__dirname + '/public'));
 
 app.use('/wiki', wikiRouter);
-app.use('/user', userRouter);
+app.use('/users', userRouter);
 
 app.get('/', (req, res, next) => {
   res.redirect('/wiki');
 });
 
-const port = process.env.PORT || 3000;
+// const port = process.env.PORT || 3000;
 
 const initDb = (force = false) => {
   db.authenticate()
@@ -32,4 +32,4 @@ const initDb = (force = false) => {
 };
 
 
-initDb(true);
+initDb();
