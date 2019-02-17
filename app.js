@@ -4,12 +4,15 @@ const layout = require('./views/layout');
 const { db } = require('./models');
 const wikiRouter = require('./routes/wiki');
 const userRouter = require('./routes/users')
+const methodOverride = require('method-override');
 
 const app = express();
 
 app.use(morgan('dev'));
 
 app.use(express.urlencoded());
+
+app.use(methodOverride('_method'));
 
 app.use(express.static(__dirname + '/public'));
 

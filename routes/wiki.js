@@ -1,46 +1,45 @@
 const express = require('express');
-const addPage = require('../views/addPage')
-const layout = require('../views/layout')
-const main = require("../views/main")
-const wikipage = require('../views/wikipage')
-const { Page, findPage, findOrCreatUse } = require("../models/index")
+const addPage = require('../views/addPage');
+const layout = require('../views/layout');
+const main = require('../views/main');
+const wikipage = require('../views/wikipage');
+const { Page, findPage, findOrCreatUse } = require('../models/index');
+
 
 const router = express.Router();
 
+
 router.get('/', (req, res, next) => {
   Page.findAll()
-    .then((pages) => res.send(main(pages)))
+    .then(pages => res.send(main(pages)))
     .catch(next);
 });
-
 
 router.post('/', (req, res, next) => {
   let user;
   findOrCreatUse(req.body.authorName, req.body.authorEamil)
-    .then((aUser) => {
+    .then(aUser => {
       user = aUser;
       return new Page({
         title: req.body.title,
         content: req.body.content,
-        status: req.body.status
+        status: req.body.status,
       });
     })
     .then(page => page.save())
     .then(page => page.setAuthor(user))
-    .then((page) => res.redirect(`/wiki/${page.slug}`))
+    .then(page => res.redirect(`/wiki/${page.slug}`))
     .catch(next);
 });
-
 
 router.get('/add', (req, res, next) => {
   res.send(addPage());
 });
 
-
 router.get('/:slug', (req, res, next) => {
   let currentPage;
   findPage(req.params.slug)
-    .then((page) => {
+    .then(page => {
       if (!page) res.sendStatus(404);
       else {
         currentPage = page;
@@ -48,14 +47,14 @@ router.get('/:slug', (req, res, next) => {
       }
     })
     .then(author => res.send(wikipage(currentPage, author)))
-    .catch(next)
-})
+    .catch(next);
+});
 
-// router.get('/:slug/delete', (req, res, next) =>{
-//   findPage((req.params.slug))
-//   .then(page => page.destroy())
-//   .then(() => res.redirect('/wiki'))
-//   .catch(next)
-// })
+router.delete('/:slug', (req, res, next) => {
+  findPage(req.params.slug)
+    .then(page => page.destroy())
+    .then(() => res.redirect('/wiki'))
+    .catch(next);
+});
 
 module.exports = router;
